@@ -1,0 +1,24 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+#todoList {
+    margin-bottom: 20px;
+}
+
+#addTaskContainer {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+#addTaskContainer input {
+    flex: 1;
+    padding: 5px;
+}
+
+#addTaskContainer button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
