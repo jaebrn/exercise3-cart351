@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
+$taskQuery = array('Type' => 'Task');
 
 try {
     $client =
@@ -9,7 +10,7 @@ try {
         );
     //2: connect to collection (that exists):
     $collection = $client->CART351->GalleryItems;
-    $resultObject = $collection->find([]);
+    $resultObject = $collection->find($taskQuery); // filter results to tasks only here
     echo ("</br>");
     echo "<h3> Query Results:::</h3>";
 
@@ -46,6 +47,7 @@ try {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { //runs when submitting new task
 
     // need to process
+    $Type = $_POST['Type'];
     $author = $_POST['a_author'];
     $users = $_POST['a_users'];
     $task = $_POST['a_task'];
@@ -59,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { //runs when submitting new task
 
         $collection->insertOne(
             [
+                'Type' => "Task",
                 'author' => $author,
                 'users' => $users,
                 'task' =>  $task,
@@ -147,8 +150,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['submitSearch'])) { //run
         </form>
     </div>
 
-    <h3> View Tasklist:</h3>
-    <!-- Search/filter tasklist -->
     <div class="searchFormContainer">
         <h1> SEARCH & VIEW</h1>
         <form id="searchForm" action="">
@@ -215,7 +216,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['submitSearch'])) { //run
 
                         } else {
                             console.log('Here:', result);
-                            //displayResponse(result);
+                            displayResponse(result);
                             form.reset();
 
                         }
