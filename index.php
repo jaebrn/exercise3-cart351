@@ -52,6 +52,39 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 
     exit;
     }
+
+    
+}
+
+//Request a display of the mongoDB collection
+if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['submitSearch']))
+{
+    //Access the mongoDB server
+    try {
+        require_once __DIR__ . '/vendor/autoload.php';
+    
+    //Connect to the mongoDB collection
+    $client = 
+    new MongoDB\Client(
+        "mongodb+srv://jaebrn:NCGJwCSrV2DN7HSb@cart351-jbrown.gpkovlg.mongodb.net/?retryWrites=true&w=majority"
+    
+    );
+
+    $collection = $client->CART351->GalleryItems;
+
+    //Fetch every results in the collection 
+    $compilledTasks = $collection->find([]);
+    //Directly display everything in the collection
+    foreach($compilledTasks as $tasks){
+        var_dump($tasks);
+      }
+    exit;
+    }
+
+    //Close the try and confirm for errors
+    catch (Exception $e) {
+        echo 'Caught exception: ',  $e->getMessage(), "\n";
+    }
 }
 
 
@@ -77,5 +110,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
         <div id="addTaskContainer">
             <input type="text" id="taskInput" placeholder="Add a new task" name="task_name">
             <button onclick="addTask()">Add Task</button>
+        </div>
+
+        <div id="displayCollection">
+            <button onclick="displayTask()">Display Task</button>
         </div>
 </body>

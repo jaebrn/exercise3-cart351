@@ -49,3 +49,8 @@ function updateTaskUI(tasks) {
         todoList.appendChild(taskItem);
     });
 }
+
+
+function displayTask(tasks) {
+
+}
