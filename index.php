@@ -24,14 +24,14 @@ try {
         echo "<div class ='content'>";
 
         foreach ($galleryItem as $key => $value) {
-            if ($key != "imagePath" && $key != "creationDate") {
+            if ($key != "imagePath" && $key != "date") {
 
-                echo ("<p>" . $key . " ::" . $value . "</p>");
+                echo ("<p>" . $key . " : " . $value . "</p>");
             }
 
-            if ($key == "creationDate") {
+            if ($key == "date") {
                 $dateTime = $value->toDateTime();
-                echo ("<p>" . $key . " ::" . $dateTime->format('r') . "</p>");
+                echo ("<p>" . $key . " : " . $dateTime->format('r') . "</p>");
             }
         }
     }
