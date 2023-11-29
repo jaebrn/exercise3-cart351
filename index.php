@@ -1,18 +1,17 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
-$taskQuery = array('Type' => 'Task');
+$taskQuery = array('Type' => 'Task'); //only return documents of type 'task'
 
-try {
+try { //runs on load (gets documents of type task)
     $client =
         new MongoDB\Client(
             "mongodb+srv://jaebrn:NCGJwCSrV2DN7HSb@cart351-jbrown.gpkovlg.mongodb.net/?retryWrites=true&w=majority"
 
         );
-    //2: connect to collection (that exists):
     $collection = $client->CART351->GalleryItems;
     $resultObject = $collection->find($taskQuery); // filter results to tasks only here
     echo ("</br>");
-    echo "<h3> Query Results:::</h3>";
+    echo "<h3> Query Results: </h3>";
 
     echo "<div id='back'>";
 
@@ -29,7 +28,7 @@ try {
                 echo ("<p>" . $key . " : " . $value . "</p>");
             }
 
-            if ($key == "date") {
+            if ($key == "date") { //date formatting
                 $dateTime = $value->toDateTime();
                 echo ("<p>" . $key . " : " . $dateTime->format('r') . "</p>");
             }
@@ -37,16 +36,12 @@ try {
     }
     //end back
     echo "</div>";
-    //FOR ONE OBJECT. //
-
-
 } catch (Exception $e) {
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { //runs when submitting new task
 
-    // need to process
     $Type = $_POST['Type'];
     $author = $_POST['a_author'];
     $users = $_POST['a_users'];
@@ -56,12 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { //runs when submitting new task
     $priority = $_POST['a_priority'];
 
     try {
-        //1: connect to mongodb atlas
-
-
         $collection->insertOne(
             [
-                'Type' => "Task",
+                'Type' => "Task", // required for doc to be included
                 'author' => $author,
                 'users' => $users,
                 'task' =>  $task,
@@ -90,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['submitSearch'])) { //run
         // get the search field
         $searchField = $_GET["a_search"];
         //make the request
-        $resultObject = $collection->find(['artist' => $searchField]);
+        $resultObject = $collection->find(['artist' => $searchField]); // old gallery function.. replace with task content
 
         $arrayToReturn = [];
         foreach ($resultObject as $galleryItem) {
@@ -125,15 +117,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['submitSearch'])) { //run
 </head>
 
 <body>
-    <!-- <select id="user" onchange="onChange(this.value)">
-        <option value="0"> Log In </option>
-        <option value="1"> Jenna </option>
-        <option value="2"> Sabine </option>
-        <option value="3"> Alex </option>
-    </select> -->
-
     <div id="result"></div>
 
+    <!-- form for creating a new task -->
     <div class="formContainer">
         <form id="newTask" action="" enctype="multipart/form-data">
             <!-- Form for new task creation-->
@@ -150,6 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['submitSearch'])) { //run
         </form>
     </div>
 
+    <!-- search/filter area -->
     <div class="searchFormContainer">
         <h1> SEARCH & VIEW</h1>
         <form id="searchForm" action="">
@@ -164,13 +151,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['submitSearch'])) { //run
         window.onload = function() {
             console.log("ready");
             document.querySelector("#searchForm").addEventListener("submit", function() {
+                //search form submission function:
                 event.preventDefault();
                 console.log("button clicked");
                 console.log("form has been submitted");
                 let formData = new FormData(document.querySelector("#searchForm"));
                 formData.append("submitSearch", "extraTest");
-                /* excellent function */
-                // converts form data to the data format we need 
                 const queryString = new URLSearchParams(formData).toString();
 
                 // make sure that the URL is the same as the page we are currently working on
@@ -185,6 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['submitSearch'])) { //run
 
             })
             document.querySelector("#newTask").addEventListener("submit", function() {
+                //new task added function:
                 event.preventDefault();
                 console.log("button clicked");
                 console.log("form has been submitted");
@@ -216,8 +203,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['submitSearch'])) { //run
 
                         } else {
                             console.log('Here:', result);
-                            displayResponse(result);
-                            form.reset();
+                            displayResponse(result); // if no error, display response
+                            form.reset(); //clear form
 
                         }
                     })
@@ -227,6 +214,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['submitSearch'])) { //run
 
             })
 
+            //display response
             function displayResponse(theResult) {
 
                 document.querySelector("#result").innerHTML = "";
