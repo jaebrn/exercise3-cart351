@@ -125,12 +125,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['submitSearch'])) { //run
             <!-- Form for new task creation-->
             <h3> Add New Task:</h3>
             <fieldset>
-                <p><label>Who are you?</label><input type="text" size="24" maxlength="40" name="a_author" required></p>
-                <p><label>What needs to be done?</label><input type="text" size="24" maxlength="40" name="a_task" required></p>
-                <p><label>Who needs to do it?</label><input type="text" size="24" maxlength="40" name="a_users" required></p>
-                <p><label>When must it be done by?</label><input type="date" size="24" maxlength="40" name="a_date" required></p>
-                <p><label>Tell me more...</label><textarea type="text" maxlength="400" name="a_descript" required></textarea></p>
-                <p><label>How urgent is it? (1: Not - 5: Very)</label><input type="number" min="1" max="5" name="a_priority" required></p>
+                <p><label>Who are you? </label><input type="text" size="24" maxlength="40" name="a_author" required></p></br>
+                <p><label>What needs to be done? </label><input type="text" size="24" maxlength="40" name="a_task" required></p></br>
+                <p><label>Who needs to do it? </label><input type="text" size="24" maxlength="40" name="a_users" required></p></br>
+                <p><label>When must it be done by? </label><input type="date" size="24" maxlength="40" name="a_date" required></p></br>
+                <p><label>Tell me more... </label><textarea type="text" maxlength="400" name="a_descript" required></textarea></p></br>
+                <p><label>How urgent is it? (1: Not - 5: Very) </label><input type="number" min="1" max="5" name="a_priority" required></p></br>
                 <p class="sub"><input type="submit" name="submit" value="Submit Task" id="buttonS" /></p>
             </fieldset>
         </form>
@@ -145,6 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['submitSearch'])) { //run
             </p>
         </form>
     </div>
+    
 
 
     <script>
@@ -247,6 +248,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['submitSearch'])) { //run
                         }
 
                     }
+                    
                 } //outer for
             }
         }
